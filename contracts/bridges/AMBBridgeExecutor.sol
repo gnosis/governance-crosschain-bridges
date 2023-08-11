@@ -21,6 +21,36 @@ contract AMBBridgeExecutor is BridgeExecutorBase {
   error UnauthorizedChainId();
   error UnauthorizedController();
 
+  /**
+   * @dev Emitted when Amb address is updated
+   * @param oldAmbAddress the old address
+   * @param newAmbAddress the new address
+   **/
+  event AmbAddressUpdated(
+    address indexed oldAmbAddress,
+    address indexed newAmbAddress
+  );
+
+  /**
+   * @dev Emitted when controller address is updated
+   * @param oldControllerAddress the old address
+   * @param newControllerAddress the new address
+   **/
+  event ControllerUpdated(
+    address indexed oldControllerAddress,
+    address indexed newControllerAddress
+  );
+
+  /**
+   * @dev Emitted when chainId is updated
+   * @param oldChainIdAddress the old Id
+   * @param newChainIdAddress the new Id
+   **/
+  event ChainIdUpdated(
+    bytes32 indexed oldChainIdAddress,
+    bytes32 indexed newChainIdAddress
+  );
+
   // Address of the AMB contract forwarding the cross-chain transaction from Ethereum
   IAMB public amb;
   // Address of the orginating sender of the message
@@ -91,6 +121,7 @@ contract AMBBridgeExecutor is BridgeExecutorBase {
   /// @notice This can only be called by this contract
   function setAmb(address _amb) public onlyThis {
     require(address(amb) != _amb, "AMB address already set to this");
+    emit AmbAddressUpdated(address(amb), _amb);
     amb = IAMB(_amb);
   }
 
@@ -99,6 +130,7 @@ contract AMBBridgeExecutor is BridgeExecutorBase {
   /// @notice This can only be called by this contract
   function setChainId(bytes32 _chainId) public onlyThis {
     require(chainId != _chainId, "chainId already set to this");
+    emit ChainIdUpdated(chainId, _chainId);
     chainId = _chainId;
   }
 
@@ -107,6 +139,7 @@ contract AMBBridgeExecutor is BridgeExecutorBase {
   /// @notice This can only be called by this contract
   function setController(address _controller) public onlyThis {
     require(controller != _controller, "controller already set to this");
+    emit ControllerUpdated(controller, _controller);
     controller = _controller;
   }
 }

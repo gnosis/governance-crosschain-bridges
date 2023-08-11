@@ -23,6 +23,11 @@ export enum ExecutorErrors {
 
   // L2BridgeExecutor
   UnauthorizedEthereumExecutor = 'UnauthorizedEthereumExecutor()',
+
+  // AMBBridgeExecutor
+  UnauthorizedAMB = 'UnauthorizedAMB()',
+  UnauthorizedChainId = 'UnauthorizedChainId()',
+  UnauthorizedController = 'UnauthorizedController()',
 }
 
 export enum ActionsSetState {
