@@ -96,23 +96,19 @@ contract AMBBridgeExecutor is BridgeExecutorBase {
   /**
    * @notice Queue an ActionsSet
    * @dev If a signature is empty, calldata is used for the execution, calldata is appended to signature otherwise
-   * @param data contains the targets, values, signatures, calldatas, and delegate options.
+   * @param targets Array of targets to be called by the actions set
+   * @param values Array of values to pass in each call by the actions set
+   * @param signatures Array of function signatures to encode in each call by the actions (can be empty)
+   * @param calldatas Array of calldata to pass in each call by the actions set
+   * @param withDelegatecalls Array of whether to delegatecall for each call of the actions set
    **/
-  function processMessageFromAMB(
-    bytes calldata data
+  function queue(
+    address[] memory targets,
+    uint256[] memory values,
+    string[] memory signatures,
+    bytes[] memory calldatas,
+    bool[] memory withDelegatecalls
   ) external onlyValid {
-
-    address[] memory targets;
-    uint256[] memory values;
-    string[] memory signatures;
-    bytes[] memory calldatas;
-    bool[] memory withDelegatecalls;
-
-    (targets, values, signatures, calldatas, withDelegatecalls) = abi.decode(
-      data,
-      (address[], uint256[], string[], bytes[], bool[])
-    );
-
     _queue(targets, values, signatures, calldatas, withDelegatecalls);
   }
 

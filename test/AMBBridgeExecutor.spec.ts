@@ -101,7 +101,7 @@ describe('AMBBridgeExecutor', async function () {
   context('AMB Foreign contract queue actions sets', () => {
     it('AMB Foreign contract tries to queue actions set with wrong amb sender (revert expected)', async () => {
       await expect(
-        bridgeExecutor.connect(users[0]).processMessageFromAMB('0x')
+        bridgeExecutor.connect(users[0]).queue([], [], [], ['0x'], [])
       ).to.be.revertedWith(ExecutorErrors.UnauthorizedAMB);
     });
 
@@ -109,32 +109,28 @@ describe('AMBBridgeExecutor', async function () {
       let wrongId = "0x000000000000000000000000000000000000000000000000000000000000002a";
       await AMBForeignChain.setMessageSourceChainId(wrongId);
       await expect(
-        bridgeExecutor.connect(AMBForeignChain.address).processMessageFromAMB('0x')
+        bridgeExecutor.connect(AMBForeignChain.address).queue([], [], [], ['0x'], [])
       ).to.be.revertedWith(ExecutorErrors.UnauthorizedChainId);
     });
 
     it('AMB Foreign contract tries to queue actions set with wrong controller (revert expected)', async () => {
       await AMBForeignChain.setMessageSender(users[0].address);
       await expect(
-        bridgeExecutor.connect(AMBForeignChain.address).processMessageFromAMB('0x')
+        bridgeExecutor.connect(AMBForeignChain.address).queue([], [], [], ['0x'], [])
       ).to.be.revertedWith(ExecutorErrors.UnauthorizedController);
     });
 
     it('AMB Foreign contract tries to queue an empty actions set (revert expected)', async () => {
       await expect(
-        bridgeExecutor.connect(AMBForeignChain.address).processMessageFromAMB('0x')
+        bridgeExecutor.connect(AMBForeignChain.address).queue([], [], [], ['0x'], [])
       ).to.be.reverted;
     });
 
     it('AMB Foreign contract tries to queue an actions set with 0 targets (revert expected)', async () => {
-      const encodedData = ethers.utils.defaultAbiCoder.encode(
-        ['address[]', 'uint256[]', 'string[]', 'bytes[]', 'bool[]'],
-        [[], [0], ['mock()'], ['0x'], [false]]
-      );
       await expect(
         bridgeExecutor
           .connect(AMBForeignChain.address)
-          .processMessageFromAMB(encodedData)
+          .queue([], [0], ['mock()'], ['0x'], [false])
       ).to.be.revertedWith(ExecutorErrors.EmptyTargets);
     });
 
@@ -149,31 +145,28 @@ describe('AMBBridgeExecutor', async function () {
         await expect(
           bridgeExecutor
             .connect(AMBForeignChain.address)
-            .processMessageFromAMB(
-              ethers.utils.defaultAbiCoder.encode(
-                ['address[]', 'uint256[]', 'string[]', 'bytes[]', 'bool[]'],
-                wrongData
-              )
+            .queue(
+              wrongData[0],
+              wrongData[1],
+              wrongData[2],
+              wrongData[3],
+              wrongData[4]
             )
         ).to.be.revertedWith(ExecutorErrors.InconsistentParamsLength);
       }
     });
 
     it('AMB Foreign contract tries to queue a duplicated actions set (revert expected)', async () => {
-      const encodedData = ethers.utils.defaultAbiCoder.encode(
-        ['address[]', 'uint256[]', 'string[]', 'bytes[]', 'bool[]'],
-        [
-          [ZERO_ADDRESS, ZERO_ADDRESS],
-          [0, 0],
-          ['mock()', 'mock()'],
-          ['0x', '0x'],
-          [false, false],
-        ]
-      );
       await expect(
         bridgeExecutor
           .connect(AMBForeignChain.address)
-          .processMessageFromAMB(encodedData)
+          .queue(
+            [ZERO_ADDRESS, ZERO_ADDRESS],
+            [0, 0],
+            ['mock()', 'mock()'],
+            ['0x', '0x'],
+            [false, false]
+          )
       ).to.be.revertedWith(ExecutorErrors.DuplicateAction);
     });
   });
@@ -205,7 +198,14 @@ describe('AMBBridgeExecutor', async function () {
         'updateGuardian(address)',
         [NEW_GUARDIAN_ADDRESS]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -234,7 +234,14 @@ describe('AMBBridgeExecutor', async function () {
         'updateDelay(uint256)',
         [NEW_DELAY]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -263,7 +270,14 @@ describe('AMBBridgeExecutor', async function () {
         'updateGracePeriod(uint256)',
         [NEW_GRACE_PERIOD]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -292,7 +306,14 @@ describe('AMBBridgeExecutor', async function () {
         'updateMinimumDelay(uint256)',
         [NEW_MINIMUM_DELAY]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -321,7 +342,14 @@ describe('AMBBridgeExecutor', async function () {
         'updateMaximumDelay(uint256)',
         [NEW_MAXIMUM_DELAY]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -355,7 +383,14 @@ describe('AMBBridgeExecutor', async function () {
       ];
       for (const wrongConfig of wrongConfigs) {
         expect(
-          await AMBForeignChain.redirect(bridgeExecutor.address, wrongConfig.encodedData)
+          await AMBForeignChain.redirect(
+            bridgeExecutor.address,
+            wrongConfig.data[0],
+            wrongConfig.data[1],
+            wrongConfig.data[2],
+            wrongConfig.data[3],
+            wrongConfig.data[4]
+          )
         );
       }
 
@@ -395,7 +430,14 @@ describe('AMBBridgeExecutor', async function () {
         'setAmb(address)',
         [NEW_AMB_ADDRESS]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)
@@ -424,7 +466,14 @@ describe('AMBBridgeExecutor', async function () {
         'setController(address)',
         [NEW_CONTROLLER_ADDRESS]
       );
-      const tx = await AMBForeignChain.redirect(bridgeExecutor.address, encodedData);
+      const tx = await AMBForeignChain.redirect(
+        bridgeExecutor.address,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4]
+      );
 
       const executionTime = (await timeLatest()).add(DELAY);
       expect(tx)

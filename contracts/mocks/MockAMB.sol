@@ -2,13 +2,18 @@
 pragma solidity ^0.8.10;
 
 interface IBridgeExecutor {
-  function processMessageFromAMB(bytes calldata data) external;
+  function queue(
+    address[] memory targets,
+    uint256[] memory values,
+    string[] memory signatures,
+    bytes[] memory calldatas,
+    bool[] memory withDelegatecalls
+  ) external;
 }
 
 contract MockAMB {
   address public sender;
   bytes32 public sourceChainId;
-  bool public madeIt;
 
   function setMessageSender(address _sender) public {
   	sender = _sender;
@@ -28,11 +33,18 @@ contract MockAMB {
 
   function redirect(
     address _target,
-    bytes calldata _message
+    address[] memory targets,
+    uint256[] memory values,
+    string[] memory signatures,
+    bytes[] memory calldatas,
+    bool[] memory withDelegatecalls
   ) external {
-    // bool success;
-    // (success, ) = _target.call{gas: 4000000}(abi.encodeWithSignature("processMessageFromAMB(bytes)", _message));
-    // madeIt = success;
-    IBridgeExecutor(_target).processMessageFromAMB(_message);
+    IBridgeExecutor(_target).queue(
+      targets,
+      values,
+      signatures,
+      calldatas,
+      withDelegatecalls
+    );
   }
 }
