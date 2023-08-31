@@ -5,7 +5,7 @@ export interface SymbolMap<T> {
 export type eNetwork =
   | eEthereumNetwork
   | ePolygonNetwork
-  | eXDaiNetwork
+  | eGnosisChainNetwork
   | eArbitrumNetwork
   | eOptimismNetwork;
 
@@ -25,8 +25,8 @@ export enum ePolygonNetwork {
   mumbai = 'mumbai',
 }
 
-export enum eXDaiNetwork {
-  xdai = 'xdai',
+export enum eGnosisChainNetwork {
+  gnosis = 'gnosis',
 }
 
 export enum eArbitrumNetwork {
@@ -48,7 +48,7 @@ export enum EthereumNetworkNames {
   main = 'main',
   matic = 'matic',
   mumbai = 'mumbai',
-  xdai = 'xdai',
+  gnosis = 'gnosis',
 }
 
 export type tEthereumAddress = string;
@@ -56,14 +56,14 @@ export type tEthereumAddress = string;
 export type iParamsPerNetwork<T> =
   | iEthereumParamsPerNetwork<T>
   | iPolygonParamsPerNetwork<T>
-  | iXDaiParamsPerNetwork<T>
+  | iGnosisChainParamsPerNetwork<T>
   | iArbitrumParamsPerNetwork<T>
   | iOptimismParamsPerNetwork<T>;
 
 export interface iParamsPerNetworkAll<T>
   extends iEthereumParamsPerNetwork<T>,
     iPolygonParamsPerNetwork<T>,
-    iXDaiParamsPerNetwork<T> {}
+    iGnosisChainParamsPerNetwork<T> {}
 
 export interface iEthereumParamsPerNetwork<eNetwork> {
   [eEthereumNetwork.coverage]: eNetwork;
@@ -81,8 +81,8 @@ export interface iPolygonParamsPerNetwork<T> {
   [ePolygonNetwork.mumbai]: T;
 }
 
-export interface iXDaiParamsPerNetwork<T> {
-  [eXDaiNetwork.xdai]: T;
+export interface iGnosisChainParamsPerNetwork<T> {
+  [eGnosisChainNetwork.gnosis]: T;
 }
 
 export interface iArbitrumParamsPerNetwork<T> {

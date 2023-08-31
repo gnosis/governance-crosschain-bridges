@@ -3,7 +3,7 @@ import {
   eEthereumNetwork,
   eOptimismNetwork,
   ePolygonNetwork,
-  eXDaiNetwork,
+  eGnosisChainNetwork,
   iParamsPerNetwork,
 } from './helpers/types';
 
@@ -32,7 +32,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eEthereumNetwork.tenderlyMain]: `https://rpc.tenderly.co/fork/${TENDERLY_FORK}`,
   [ePolygonNetwork.mumbai]: 'https://rpc-mumbai.maticvigil.com',
   [ePolygonNetwork.matic]: 'https://rpc-mainnet.matic.network',
-  [eXDaiNetwork.xdai]: 'https://rpc.xdaichain.com/',
+  [eGnosisChainNetwork.gnosis]: 'https://rpc.gnosischain.com/',
   [eArbitrumNetwork.arbitrum]: `https://arb1.arbitrum.io/rpc`,
   [eArbitrumNetwork.arbitrumRinkeby]: `https://rinkeby.arbitrum.io/rpc`,
   [eArbitrumNetwork.arbitrumGoerli]: `https://goerli-rollup.arbitrum.io/rpc`,
