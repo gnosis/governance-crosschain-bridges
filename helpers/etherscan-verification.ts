@@ -21,6 +21,7 @@ export const SUPPORTED_ETHERSCAN_NETWORKS = [
   'goerli',
   'matic',
   'mumbai',
+  'gnosis',
 ];
 
 function delay(ms: number) {

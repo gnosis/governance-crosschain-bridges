@@ -109,26 +109,27 @@ const hardhatConfig: HardhatUserConfig = {
     ],
   },
   etherscan: {
-    customChains: [
-      {
-        network: "gnosis",
-        chainId: 100,
-        urls: {
-          // 3) Select to what explorer verify the contracts
-          // Gnosisscan
-          apiURL: "https://api.gnosisscan.io/api",
-          browserURL: "https://gnosisscan.io/",
-          // Blockscout
-          //apiURL: "https://blockscout.com/xdai/mainnet/api",
-          //browserURL: "https://blockscout.com/xdai/mainnet",
-        },
-      },
-    ],
-    apiKey: {
-      optimisticEthereum: OPTIMISTIC_ETHERSCAN_KEY,
-      arbitrumOne: ARBISCAN_KEY,
-      gnosis: GNOSIS_ETHERSCAN,
-    },
+    // customChains: [
+    //   {
+    //     network: "gnosis",
+    //     chainId: 100,
+    //     urls: {
+    //       // 3) Select to what explorer verify the contracts
+    //       // Gnosisscan
+    //       apiURL: "https://api.gnosisscan.io/api",
+    //       browserURL: "https://gnosisscan.io/",
+    //       // Blockscout
+    //       //apiURL: "https://blockscout.com/xdai/mainnet/api",
+    //       //browserURL: "https://blockscout.com/xdai/mainnet",
+    //     },
+    //   },
+    // ],
+    // apiKey: {
+    //   optimisticEthereum: OPTIMISTIC_ETHERSCAN_KEY,
+    //   arbitrumOne: ARBISCAN_KEY,
+    //   gnosis: GNOSIS_ETHERSCAN,
+    // },
+    apiKey: GNOSIS_ETHERSCAN
   },
   tenderly: {
     project: TENDERLY_PROJECT,
