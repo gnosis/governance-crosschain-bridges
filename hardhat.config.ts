@@ -49,7 +49,6 @@ const ARBISCAN_KEY = process.env.ARBISCAN_KEY || '';
 const OPTIMISTIC_ETHERSCAN_KEY = process.env.OPTIMISTIC_ETHERSCAN_KEY || '';
 const TENDERLY_PROJECT = process.env.TENDERLY_PROJECT || '';
 const TENDERLY_USERNAME = process.env.TENDERLY_USERNAME || '';
-const GNOSIS_ETHERSCAN = 'any api key is good currently';
 
 // Use of mnemonic over private key if mnemonic is provided
 const accountsToUse =
@@ -109,27 +108,10 @@ const hardhatConfig: HardhatUserConfig = {
     ],
   },
   etherscan: {
-    // customChains: [
-    //   {
-    //     network: "gnosis",
-    //     chainId: 100,
-    //     urls: {
-    //       // 3) Select to what explorer verify the contracts
-    //       // Gnosisscan
-    //       apiURL: "https://api.gnosisscan.io/api",
-    //       browserURL: "https://gnosisscan.io/",
-    //       // Blockscout
-    //       //apiURL: "https://blockscout.com/xdai/mainnet/api",
-    //       //browserURL: "https://blockscout.com/xdai/mainnet",
-    //     },
-    //   },
-    // ],
-    // apiKey: {
-    //   optimisticEthereum: OPTIMISTIC_ETHERSCAN_KEY,
-    //   arbitrumOne: ARBISCAN_KEY,
-    //   gnosis: GNOSIS_ETHERSCAN,
-    // },
-    apiKey: GNOSIS_ETHERSCAN
+    apiKey: {
+      optimisticEthereum: OPTIMISTIC_ETHERSCAN_KEY,
+      arbitrumOne: ARBISCAN_KEY,
+    },
   },
   tenderly: {
     project: TENDERLY_PROJECT,
@@ -170,6 +152,7 @@ const hardhatConfig: HardhatUserConfig = {
     matic: getCommonNetworkConfig(ePolygonNetwork.matic, 137),
     mumbai: getCommonNetworkConfig(ePolygonNetwork.mumbai, 80001),
     gnosis: getCommonNetworkConfig(eGnosisChainNetwork.gnosis, 100),
+    chiado: getCommonNetworkConfig(eGnosisChainNetwork.chiado, 10200),
     [eArbitrumNetwork.arbitrum]: getCommonNetworkConfig(eArbitrumNetwork.arbitrum, 42161),
     [eArbitrumNetwork.arbitrumRinkeby]: {
       ...getCommonNetworkConfig(eArbitrumNetwork.arbitrumRinkeby, 421611),

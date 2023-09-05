@@ -27,6 +27,7 @@ export enum ePolygonNetwork {
 
 export enum eGnosisChainNetwork {
   gnosis = 'gnosis',
+  chiado = 'chiado'
 }
 
 export enum eArbitrumNetwork {
@@ -83,6 +84,7 @@ export interface iPolygonParamsPerNetwork<T> {
 
 export interface iGnosisChainParamsPerNetwork<T> {
   [eGnosisChainNetwork.gnosis]: T;
+  [eGnosisChainNetwork.chiado]: T;
 }
 
 export interface iArbitrumParamsPerNetwork<T> {

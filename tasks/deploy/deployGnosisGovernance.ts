@@ -14,11 +14,6 @@ task('deployGnosisGovernance', 'deploy AMBBridgeExecutor')
     let contractSigner: Signer = await (await DRE.ethers.getSigners())[0];
     console.log(DRE.network.name)
 
-    // if (!DRE.network.name.includes('tenderly')) {
-    //   console.log(`Using OpenZeppelin Defender`);
-    //   contractSigner = getDefaultSigner('ozd');
-    // }
-
     console.log(`Signer: ${await contractSigner.getAddress()}`);
     const ContractFactory = await ethers.getContractFactory('AMBBridgeExecutor');
     const constructorInputs = ContractFactory.interface.deploy.inputs;

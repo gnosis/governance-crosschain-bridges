@@ -33,6 +33,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [ePolygonNetwork.mumbai]: 'https://rpc-mumbai.maticvigil.com',
   [ePolygonNetwork.matic]: 'https://rpc-mainnet.matic.network',
   [eGnosisChainNetwork.gnosis]: 'https://rpc.gnosischain.com/',
+  [eGnosisChainNetwork.chiado]: 'https://rpc.chiadochain.net/',
   [eArbitrumNetwork.arbitrum]: `https://arb1.arbitrum.io/rpc`,
   [eArbitrumNetwork.arbitrumRinkeby]: `https://rinkeby.arbitrum.io/rpc`,
   [eArbitrumNetwork.arbitrumGoerli]: `https://goerli-rollup.arbitrum.io/rpc`,

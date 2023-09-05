@@ -36,7 +36,8 @@
     "deploy:gov-bridge:optimism-testnet": "npm run hardhat:optimism-testnet deploy -- --tags 'OptimisticGov,Greeter'",
     "deploy:gov-bridge:arbitrum-rinkeby": "npm run hardhat:arbitrum-rinkeby deploy -- --tags 'ArbitrumGov,Greeter'",
     "deploy:gov-bridge:arbitrum-goerli": "npm run hardhat:arbitrum-goerli deploy -- --tags 'ArbitrumGov,Greeter'",
-    "deploy:gov-bridge:gnosis": "hardhat deployGnosisGovernance --network gnosis"
+    "deploy:gov-bridge:gnosis": "hardhat deployGnosisGovernance --network gnosis",
+    "deploy:gov-bridge:gnosis-chiado": "hardhat deployGnosisGovernance --network chiado"
   },
   "devDependencies": {
     "@aave/governance-v2": "^1.0.0",
